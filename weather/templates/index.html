@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+        <meta charset="utf-8">
+        <title>weather</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <style>
+          .card {
+              margin: 20px;
+              background: #ffffff;
+              border-radius: 10px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+              font-family: Arial, sans-serif;
+              transition: transform 0.3s ease;
+              border: 1px solid #e0e0e0;
+          }
+      
+          .card:hover {
+              transform: translateY(-5px);
+          }
+      
+          .card-content {
+              padding: 20px;
+              border-top: 1px solid #e0e0e0;
+          }
+      
+          .card h3 {
+              margin: 0 0 10px;
+              font-size: 24px;
+              color: #333333;
+          }
+      
+          .card h5 {
+              margin: 0 0 8px;
+              font-size: 16px;
+              color: #555555;
+          }
+      
+          .card-gradient {
+              background: linear-gradient(to bottom right, #4a90e2, #2c3e50);
+              color: #ffffff;
+              padding: 20px;
+              border-radius: 10px 10px 0 0;
+          }
+      </style>
+      
+      </head>
+
+<body>
+    <nav class="row" style="background: rgb(46, 46, 110); color: white;">
+        <h1 class="col-md-3 text-center">weather</h1>
+      </nav>
+      <br />
+      <br />
+  <center class="row">
+    <form method="post" class="col-md-6 col-md-offset-3">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" class="form-control" name="city" placeholder="Search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+    </form>
+  </center>
+  <div class="card row" style="margin: 10px; background:white ; color: rgb(46, 46, 110);">
+    {% if data.country_code and data.coordinate and data.temp and data.pressure and data.humidity %}
+    <div class="col-md-6 col-md-offset-3">
+      <h3>country code : {{data.country_code}}</h1>
+        <h5>city : {{data.name}}</h5>
+        <h5>coordinate : {{data.coordinate}}</h5>
+        <h5>temp : {{data.temp}}</h5>
+        <h5>pressure : {{data.pressure}} </h5>
+        <h5>humidity : {{data.humidity}}</h5>
+        
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="weather-table" style="margin: 10px; background: white ; color: rgb(46, 46, 110);">
+  <h2>Weather History</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Country Code</th>
+                    <th>City</th>
+                    <th>Coordinate</th>
+                    <th>Temperature (in C)</th>
+                    <th>Pressure</th>
+                    <th>Humidity</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for weathers in weather_data %}
+                <tr>
+                    <td>{{ weathers.country_code }}</td>
+                    <td>{{ weathers.city }}</td>
+                    <td>{{ weathers.coordinate }}</td>
+                    <td>{{ weathers.temp }}</td>
+                    <td>{{ weathers.pressure }}</td>
+                    <td>{{ weathers.humidity }}</td>
+                    <td>{{ weathers.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
